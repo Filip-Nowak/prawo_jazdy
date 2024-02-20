@@ -1,11 +1,12 @@
 package org.example.prawo_jazdy.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.example.prawo_jazdy.entity.AdvancedQuestion;
+import org.example.prawo_jazdy.entity.BasicQuestion;
 import org.example.prawo_jazdy.entity.Question;
-import org.example.prawo_jazdy.enums.QuestionType;
+import org.example.prawo_jazdy.repository.AdvancedQuestionRepository;
 import org.example.prawo_jazdy.repository.AnswerRepository;
-import org.example.prawo_jazdy.repository.QuestionRepository;
+import org.example.prawo_jazdy.repository.BasicQuestionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,39 +14,39 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
-    private final QuestionRepository questionRepository;
+    private final BasicQuestionRepository basicQuestionRepository;
+    private final AdvancedQuestionRepository advancedQuestionRepository;
     private final AnswerRepository answerRepository;
     private Random random;
-    public Optional<Question> getQuestionById(Long id) {
-        return questionRepository.findById(id);
-    }
-    public Optional<Question> getRandomBasicQuestion() {
-        int randomId = random.nextInt((int) questionRepository.count()) + 1;
-        return questionRepository.findQuestionByIdAndQuestionType((long) randomId, QuestionType.TRUE_FALSE);
-
-    }
-    public Optional<Question> getRandomSpecializedQuestion(){
-        int randomId = random.nextInt((int) questionRepository.count()) + 1;
-        return questionRepository.findQuestionByIdAndQuestionType((long) randomId, QuestionType.THREE_ANSWERS);
-    }
-    public Question saveQuestion(Question question) {
-        return questionRepository.save(question);
+    public Question saveQuestion(Question question){
+        if(question instanceof BasicQuestion)
+            return basicQuestionRepository.save((BasicQuestion) question);
+        else
+            return advancedQuestionRepository.save((AdvancedQuestion) question);
     }
     public List<Question> getTestQuestions() {
         List<Question>questions=new LinkedList<>();
-
+        long basicQuestionCount=basicQuestionRepository.count();
+        long advancedQuestionCount=advancedQuestionRepository.count();
+        List<Long> basicIndexes=getRandomIndexes(20,basicQuestionCount);
+        List<Long> advancedIndexes=getRandomIndexes(12,advancedQuestionCount);
+        for(Long index:basicIndexes){
+            questions.add(basicQuestionRepository.findById(index).orElseThrow());
+        }
+        for(Long index:advancedIndexes){
+            questions.add(advancedQuestionRepository.findById(index).orElseThrow());
+        }
         return questions;
     }
-    private ArrayList<Long> getRandomIndexes(){
-        Random random =new Random();
-        ArrayList<Long> arr=new ArrayList<>();
-        List<Long> availableIndexes=
-        for(int i=0;i<20;i++){
-            long randomIndex=random.nextLong(1,questionCount+1);
-            if(!arr.contains(randomIndex))
-                arr.add(randomIndex);
-            else
-                i--;
+    private List<Long>getRandomIndexes(int size,long max){
+        Random random=new Random();
+        List<Long>indexes=new ArrayList<>();
+        while(indexes.size()<size){
+            long randomIndex=random.nextLong(1,max+1);
+            if(!indexes.contains(randomIndex))
+                indexes.add(randomIndex);
         }
+        return indexes;
     }
+
 }

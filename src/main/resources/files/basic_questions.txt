@@ -1,5 +1,5 @@
 1#Czy masz obowiązek bezwarunkowo zatrzymać pojazd przed linią złożoną z trójkątów?
--T
+-N
 ;;
 2#Czy na tej drodze zawsze masz obowiązek ustąpić pierwszeństwa pieszemu?
 -N
@@ -8,19 +8,19 @@
 -N
 ;;
 4#Czy w tej sytuacji, podczas postoju uszkodzonego pojazdu poza obszarem zabudowanym, masz obowiązek umieścić ostrzegawczy trójkąt odblaskowy bezpośrednio za pojazdem lub na nim?
--T
+-N
 ;;
 5#Zamierzasz jechać na wprost, a kierujący tramwajem planuje skręcić w lewo. Czy masz przed nim pierwszeństwo?
--T
+-N
 ;;
 6#Czy w tej sytuacji wolno Ci kontynuować jazdę?
 -N
 ;;
 7#Czy powinieneś, bez wcześniejszego wezwania pomocy, rozpocząć resuscytację potrzebującej jej osoby rannej, gdy jesteś sam na miejscu wypadku drogowego?
--T
+-N
 ;;
 8#Czy chcąc w tej sytuacji kontynuować jazdę, masz obowiązek czekać, aż tramwaj ruszy?
--T
+-N
 ;;
 9#Czy w tej sytuacji, bezpośrednio za widoczną po prawej stronie drogi linią złożoną z punktowych elementów odblaskowych barwy białej jest pobocze?
 -N
@@ -29,7 +29,7 @@
 -N
 ;;
 11#Czy w tej sytuacji masz prawo wyprzedzić pojazd szynowy?
--T
+-N
 ;;
 12#Czy masz obowiązek zachować odstęp co najmniej 1 metra od omijanego obiektu?
 -N
@@ -38,23 +38,23 @@
 -N
 ;;
 14#Czy ten znak informuje o przejściu dla pieszych, po którym mogą przejeżdżać rowerzyści?
--T
+-N
 ;;
 15#Czy ten znak ostrzega o zbliżaniu się do skrzyżowania z jednokierunkową drogą podporządkowaną, której wlot znajduje sie po lewej stronie?
 -N
 ;;
 16#Czy w tej sytuacji masz obowiązek zachować szczególną ostrożność?
--T
+-N
 ;;
 17#Czy w tej sytuacji masz prawo zaparkować pojazd w odległości 5m przed przejściem dla pieszych?
--T
+-N
 ;;
 18#Czy ten znak poziomy zabrania zmiany pasa ruchu?
 -T
 ;;
 19#Czy w tej sytuacji masz prawo zatrzymać pojazd za znakiem w celu wysadzenia pasażera?
--N
+-T
 ;;
 20#Czy masz prawo używać świateł przeciwmgłowych tylnych, jeżeli mgła ogranicza widoczność na odległość 100m?
--T
+-N
 ;;

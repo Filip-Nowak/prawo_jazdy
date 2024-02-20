@@ -1,8 +1,9 @@
 package org.example.prawo_jazdy;
 
+import org.example.prawo_jazdy.entity.AdvancedQuestion;
 import org.example.prawo_jazdy.entity.Answer;
+import org.example.prawo_jazdy.entity.BasicQuestion;
 import org.example.prawo_jazdy.entity.Question;
-import org.example.prawo_jazdy.enums.QuestionType;
 import org.example.prawo_jazdy.service.QuestionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -36,7 +37,8 @@ public class PrawoJazdyApplication {
             for(Question question:questions1){
                 questionService.saveQuestion(question);
             }
-            //System.out.println(readBasicQuestions());
+            List<Question> test=questionService.getTestQuestions();
+            System.out.println(test);
         };
     }
     private List<Question> readBasicQuestions(){
@@ -56,25 +58,17 @@ public class PrawoJazdyApplication {
         }
 
         String[] array = bufferedReader.lines().collect(Collectors.joining()).split(";;");
-        System.out.println(Arrays.asList(array));
         List<Question> questionList=new LinkedList<>();
         for(String questionStr:array){
-            System.out.println(questionStr);
             String[] strings = questionStr.split("#");
             int number=Integer.parseInt(strings[0]);
             String quest=strings[1].split("-")[0];
-            int correct;
-            System.out.println(strings[1].split("-")[1]);
-            if(strings[1].split("-")[1].equals("T")){
-                correct=1;
-            }else{
-                correct=0;
-            }
-            Question question=Question.builder()
+            boolean correct;
+            correct= strings[1].split("-")[1].equals("T");
+            BasicQuestion question=BasicQuestion.builder()
                     .number(number)
-                    .correctAnswer(correct)
+                    .correct(correct)
                     .question(quest)
-                    .questionType(QuestionType.TRUE_FALSE)
                     .build();
             questionList.add(question);
         }
@@ -96,36 +90,34 @@ public class PrawoJazdyApplication {
         }
 
         String[] array = bufferedReader.lines().collect(Collectors.joining()).split(";;");
-        System.out.println(Arrays.asList(array));
         List<Question> questionList=new LinkedList<>();
         for(String questionStr:array){
             String[] strings = questionStr.split("#");
             int number=Integer.parseInt(strings[0]);
             String quest=strings[1].split("@")[0];
-            int correct;
             String[] answersStr=strings[1].split("@")[1].split(";");
             List<Answer> answers=new LinkedList<>();
             int i=1;
-            Question question=new Question();
+            AdvancedQuestion question=AdvancedQuestion.builder()
+                    .question(quest)
+                    .number(number)
+                    .build();
             for(String answerStr:answersStr){
                 char[] chars=answerStr.toCharArray();
-//                if(chars[chars.length-1]=='_'){
-//                    correct=i;
-//                    answerStr=removeLastChar(answerStr);
-//                }
+                boolean correct=false;
+                if(chars[chars.length-1]=='_'){
+                    correct=true;
+                    answerStr=removeLastChar(answerStr);
+                }
                 Answer answer = Answer.builder()
                         .answer(answerStr)
                         .question(question)
                         .number(i)
+                        .correct(correct)
                         .build();
                 answers.add(answer);
             }
-            Random random=new Random();
-            question.setQuestion(quest);
-            question.setQuestionType(QuestionType.THREE_ANSWERS);
             question.setAnswers(answers);
-            question.setNumber(number);
-            question.setCorrectAnswer(random.nextInt(1,4));
             questionList.add(question);
         }
         return questionList;

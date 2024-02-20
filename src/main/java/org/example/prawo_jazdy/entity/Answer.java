@@ -18,5 +18,6 @@ public class Answer {
     private int number;
     private String answer;
     @ManyToOne
-    private Question question;
+    private AdvancedQuestion question;
+    private boolean correct;
 }

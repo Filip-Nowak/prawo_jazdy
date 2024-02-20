@@ -1,0 +1,36 @@
+21#Jaką funkcję spełnia układ przeciwblokujący (ABS) stosowany w pojazdach?
+@ułatwia zmianę toru jazdy w czasie hamowania;w każdych warunkach skraca drogę hamowania;zapobiega zerwaniu przyczepności kół napędowych podczas rozpędzania pojazdu
+;;
+22#O czym ostrzega, świecąca się na czerwono w czasie jazdy samochodem osobowym, lampka kontrolna z symbolem akumulatora?
+@o uszkodzeniu akumulatora;o całkowitym rozładowaniu się akumulatora;o nieprawidłowo działającym ładowaniu akumulatora
+;;
+23#Na co, przede wszystkim, powinieneś zwrócić uwagę podczas wymijania innego pojazdu?
+@na prawidłowe ułożenie rąk na kierownicy;na pojazdy jadące za tobą;na zachowanie bezpiecznego odstępu
+;;
+24#Którą z tych czynności masz obowiązek wykonać podczas wyprzedzania samochodem osobowym we mgle poza obszarem zabudowanym?
+@dawać krótkotrwałe sygnały świetlne;dawać krótkotrwałe sygnały dźwiękowe;włączyć tylne światła przeciwmgłowe, niezależnie od stopnia ograniczenia widoczności
+;;
+25#Z jaką dopuszczalną prędkością wolno Ci kierować samochodem osobowym na drodze za widocznym znakiem?
+@90km/h;100km/h;110km/h
+;;
+26#Jak często należy obracać poszkodowanego nieurazowego na drugi bok po ułożeniu go w pozycji bezpiecznej?
+@co 60 minut;co 30 minut;co 15 minut
+;;
+27#W jaki sposób powinny być ustawione światła mijania w pojeździe samochodowym?
+@tak, aby oświetlały droge na odległość do 30 m przed pojazdem;tak, aby symetrycznie oświetlały całą drogę;tak, aby oświetlały drogę asymetrycznie
+;;
+28#Jaka jest maksymalna dopuszczalna odległość, licząc od tylnej płaszczyzny obrysu pojazdu, na którą może wystawać ładunek przewożony pojazdem samochodowym?
+@2m;1m;0.5m
+;;
+29# Jedziesz z prędkością 80km/h. Jaka pozycja początkowa zapewni Ci optymalny tor jazdy po zakręcie?
+@na środku drogi, z częściowym przekroczeniem widocznej linii;przy linii rozdzielającej pasy ruchu - na prawej połowie jezdni ;przy prawej krawędzi jezdni
+;;
+30#Czy u poszkodowanego, który omyłkowo połknął substancje żrącą, należy wywołać wymioty?
+@tak, jak najszybciej;nie, w żadnym przypadku;nie, w żadnym przypadku gdy substancja żrąca była mocno rozcieńczona
+;;
+31#Czy kierując samochodem osobowym w tunelu o długości 600m położonym w obszarze zabudowanym, masz obowiązek utrzymać odstęp od poprzedzającego pojazdu nie mniejszy niż 50 metrów?
+@Tak, ale prowadząc samochód o masie całkowitej przekraczającej 2.5 tony;tak;nie
+;;
+32#Którym z wymienionych zespołów pojazdów możesz kierować mając prawo jazdy kategorii B?
+@Samochodem ciężarowym o dopuszczalnej masie całkowitej 2,5t z przyczepą lekką;ciągnikiem rolniczym z dwiema przyczepami;samochodem osobowym z przyczepą, których łączna dopuszczalna masa całkowita wynosi 4,5t
+;;

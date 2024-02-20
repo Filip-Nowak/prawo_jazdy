@@ -8,10 +8,7 @@ import org.example.prawo_jazdy.repository.AnswerRepository;
 import org.example.prawo_jazdy.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,17 +33,19 @@ public class QuestionService {
     }
     public List<Question> getTestQuestions() {
         List<Question>questions=new LinkedList<>();
-        for(int i=0;i<20;i++){
-            Optional<Question> question=getRandomBasicQuestion();
-            question.ifPresent(questions::add);
-        }
-        for(int i=0;i<12;i++){
-            Optional<Question> question=getRandomSpecializedQuestion();
-            question.ifPresent(questions::add);
-        }
-        if(questions.size()<32){
-            throw new RuntimeException("Not enough questions in database");
-        }
+
         return questions;
+    }
+    private ArrayList<Long> getRandomIndexes(){
+        Random random =new Random();
+        ArrayList<Long> arr=new ArrayList<>();
+        List<Long> availableIndexes=
+        for(int i=0;i<20;i++){
+            long randomIndex=random.nextLong(1,questionCount+1);
+            if(!arr.contains(randomIndex))
+                arr.add(randomIndex);
+            else
+                i--;
+        }
     }
 }

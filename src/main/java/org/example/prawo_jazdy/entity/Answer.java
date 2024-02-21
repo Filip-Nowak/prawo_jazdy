@@ -19,5 +19,4 @@ public class Answer {
     private String answer;
     @ManyToOne
     private AdvancedQuestion question;
-    private boolean correct;
 }

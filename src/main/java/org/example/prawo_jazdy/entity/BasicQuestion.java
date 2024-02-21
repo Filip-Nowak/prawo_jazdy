@@ -21,4 +21,5 @@ public class BasicQuestion implements Question{
     private int number;
     private String question;
     private boolean correct;
+    private int correctAnswer;
 }

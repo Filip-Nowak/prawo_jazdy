@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .correct {
+            background-color: green;
+            border: 3px solid black;
+        }
+
+        .incorrect {
+            border: 3px solid black;
+            background-color: red;
+        }
+
+        .correctAnswer {
+            font-weight: bold;
+        }
+
+        .userAnswer {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Result</h1>
+<p th:text="${result.correctAnswers} + '/32'"></p>
+<div th:each="question : ${result.questionList}">
+    <div th:attr="class=${question.correctAnswer==question.userAnswer ?'correct':'incorrect'}">
+        <p th:text="${question.question}"></p>
+        <p
+                th:each="answer : ${question.answers}" th:text="${answer.answer}"
+                th:attr="class=${question.correctAnswer==answer.number ?'correctAnswer' : (question.userAnswer==answer.number ? 'userAnswer' : '')}">
+        </p>
+    </div>
+</div>
+<form action="#" th:action="@{/}" method="get">
+    <input type="submit" value="Return to homepage">
+</form>
+</body>
+</html>

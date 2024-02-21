@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .question{
+            border: solid black 5px;
+        }
+    </style>
+</head>
+<body>
+hello from exam
+<div id="container">
+    <form action="#" th:action="@{/processForm}" th:object="${formData}" method="post">
+        <div th:each="question : ${questionList}">
+            <div class="question">
+                <p th:text="${question.question}"></p>
+                <label th:each="answer : ${question.answers}">
+                    <input type="radio" th:field="${formData.answers['__${question.number}__']}" th:value="${answer.number}"/>
+                    <span th:text="${answer.answer}"></span>
+                </label>
+            </div>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</body>
+</html>

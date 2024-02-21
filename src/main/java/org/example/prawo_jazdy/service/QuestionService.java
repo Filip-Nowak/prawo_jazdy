@@ -49,4 +49,16 @@ public class QuestionService {
         return indexes;
     }
 
+    public Question findByNumber(int questionNumber) {
+//        return basicQuestionRepository.findByNumber(questionNumber).orElse(advancedQuestionRepository.findByNumber(questionNumber).orElseThrow());
+        System.out.println("Question number: " + questionNumber);
+        Optional<Question> question = basicQuestionRepository.findByNumber(questionNumber);
+        if (question.isPresent()) {
+            System.out.println("Basic question found");
+            return question.get();
+        } else {
+            System.out.println("Advanced question found");
+            return advancedQuestionRepository.findByNumber(questionNumber).orElseThrow();
+        }
+    }
 }

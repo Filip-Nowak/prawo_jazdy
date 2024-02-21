@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>hello from homepage</p>
+<form action="#" th:action="@{/exam}" method="post">
+    <input type="submit" value="Start exam">
+</form>
+<form action="#" th:action="@{/leaderboard}" method="get">
+    <input type="submit" value="show leaderboards">
+</form>
+
+</body>
+</html>

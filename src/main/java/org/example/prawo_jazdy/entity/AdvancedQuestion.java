@@ -20,6 +20,7 @@ public class AdvancedQuestion implements Question{
     @ToString.Exclude
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Answer> answers;
+    private int correctAnswer;
 
 
 }

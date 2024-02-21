@@ -13,10 +13,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
@@ -43,7 +41,7 @@ public class PrawoJazdyApplication {
     }
     private List<Question> readBasicQuestions(){
         System.out.println("xdd");
-        Resource resource=new ClassPathResource("files/basic_questions.txt");
+        Resource resource=new ClassPathResource("files/questions/basic_questions.txt");
         File file = null;
         try {
             file = resource.getFile();
@@ -75,7 +73,7 @@ public class PrawoJazdyApplication {
         return questionList;
     }
     public List<Question> readAdvancedQuestions(){
-        Resource resource=new ClassPathResource("files/advanced_questions.txt");
+        Resource resource=new ClassPathResource("files/questions/advanced_questions.txt");
         File file = null;
         try {
             file = resource.getFile();
@@ -98,25 +96,26 @@ public class PrawoJazdyApplication {
             String[] answersStr=strings[1].split("@")[1].split(";");
             List<Answer> answers=new LinkedList<>();
             int i=1;
+            int correct=1;
             AdvancedQuestion question=AdvancedQuestion.builder()
                     .question(quest)
                     .number(number)
                     .build();
             for(String answerStr:answersStr){
                 char[] chars=answerStr.toCharArray();
-                boolean correct=false;
                 if(chars[chars.length-1]=='_'){
-                    correct=true;
+                    correct=i;
                     answerStr=removeLastChar(answerStr);
                 }
                 Answer answer = Answer.builder()
                         .answer(answerStr)
                         .question(question)
                         .number(i)
-                        .correct(correct)
                         .build();
                 answers.add(answer);
+                i++;
             }
+            question.setCorrectAnswer(correct);
             question.setAnswers(answers);
             questionList.add(question);
         }

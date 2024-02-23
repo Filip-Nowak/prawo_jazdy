@@ -10,4 +10,5 @@ import java.util.List;
 public class ExamResultModel {
     private int correctAnswers;
     List<QuestionModel> questionList;
+    private String nickname;
 }

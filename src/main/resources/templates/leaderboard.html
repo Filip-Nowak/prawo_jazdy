@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 hello from leaderboard
+<p>LEADERBOARD</p>
+<table>
+    <tr>
+        <th>place</th>
+        <th>nickname</th>
+        <th>score</th>
+        <th>time</th>
+        <th>date</th>
+
+    </tr>
+    <tr th:each="result,i : ${leaderboard.scores}">
+        <td th:text="(${i.index}+1)+'.'"></td>
+        <td th:text="${result.nickname}"></td>
+        <td th:text="${result.score}+'/32'"></td>
+        <td th:text="${result.time}"></td>
+        <td th:text="${result.date}"></td>
+    </tr>
+</table>
 </body>
 </html>

@@ -13,9 +13,10 @@
 hello from exam
 <div id="container">
     <form action="#" th:action="@{/processForm}" th:object="${formData}" method="post">
-        <div th:each="question : ${questionList}">
+        <div th:each="question,i : ${questionList}">
             <div class="question">
-                <p th:text="${question.question}"></p>
+                <p th:text="(${i.index}+1)+'. '+${question.question}"></p>
+                <img th:if="${question.image}" th:src="'http://localhost:8080/images/'+${question.number}" th:alt="${question.question}"/>
                 <label th:each="answer : ${question.answers}">
                     <input type="radio" th:field="${formData.answers['__${question.number}__']}" th:value="${answer.number}"/>
                     <span th:text="${answer.answer}"></span>

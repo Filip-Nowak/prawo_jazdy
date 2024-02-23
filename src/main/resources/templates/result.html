@@ -38,5 +38,11 @@
 <form action="#" th:action="@{/}" method="get">
     <input type="submit" value="Return to homepage">
 </form>
+<form action="#" th:action="@{/saveToLeaderboard}" method="post" th:object="${result}">
+    <p>share your result</p>
+    <label><input th:field="*{nickname}"></label>
+    <input type="hidden" th:field="*{correctAnswers}" th:value="${result.correctAnswers}"/>
+    <input type="submit" value="View Leaderboard">
+</form>
 </body>
 </html>

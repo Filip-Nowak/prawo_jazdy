@@ -3,12 +3,16 @@ package org.example.prawo_jazdy.service;
 import lombok.RequiredArgsConstructor;
 import org.example.prawo_jazdy.entity.AdvancedQuestion;
 import org.example.prawo_jazdy.entity.BasicQuestion;
+import org.example.prawo_jazdy.entity.Leaderboard;
 import org.example.prawo_jazdy.entity.Question;
+import org.example.prawo_jazdy.model.ExamResultModel;
 import org.example.prawo_jazdy.repository.AdvancedQuestionRepository;
 import org.example.prawo_jazdy.repository.AnswerRepository;
 import org.example.prawo_jazdy.repository.BasicQuestionRepository;
+import org.example.prawo_jazdy.repository.LeaderboardRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -16,7 +20,7 @@ import java.util.*;
 public class QuestionService {
     private final BasicQuestionRepository basicQuestionRepository;
     private final AdvancedQuestionRepository advancedQuestionRepository;
-    private final AnswerRepository answerRepository;
+    private final LeaderboardRepository leaderboardRepository;
     private Random random;
     public Question saveQuestion(Question question){
         if(question instanceof BasicQuestion)
@@ -60,5 +64,18 @@ public class QuestionService {
             System.out.println("Advanced question found");
             return advancedQuestionRepository.findByNumber(questionNumber).orElseThrow();
         }
+    }
+
+    public void saveToLeaderboard(ExamResultModel resultModel) {
+        Leaderboard leaderboard = Leaderboard.builder()
+                .score(resultModel.getCorrectAnswers())
+                .nickname(resultModel.getNickname())
+                .date(LocalDate.now())
+                .build();
+        leaderboardRepository.save(leaderboard);
+    }
+
+    public List<Leaderboard> getLeaderboard() {
+        return leaderboardRepository.findAllByOrderByScoreDescTimeDesc();
     }
 }

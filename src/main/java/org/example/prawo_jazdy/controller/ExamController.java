@@ -52,7 +52,8 @@ public class ExamController {
             QuestionModel questionModel=QuestionModel.builder()
                     .question(question.getQuestion())
                     .number(question.getNumber())
-                    .answers(answers).build();
+                    .answers(answers)
+                    .image(true).build();
             System.out.println(questionModel);
             models.add(questionModel);
         }
@@ -96,7 +97,8 @@ public class ExamController {
                     .question(question.getQuestion())
                     .userAnswer(answerNumber)
                     .correctAnswer(question.getCorrectAnswer())
-                    .answers(answers).build();
+                    .answers(answers)
+                    .image(true).build();
             if(questionModel.getUserAnswer()==questionModel.getCorrectAnswer()){
                 resultModel.setCorrectAnswers(resultModel.getCorrectAnswers()+1);
             }
@@ -104,5 +106,10 @@ public class ExamController {
         }
         model.addAttribute("result",resultModel);
         return "result";
+    }
+    @PostMapping("/saveToLeaderboard")
+    public String saveToLeaderboard(@ModelAttribute(name = "result") ExamResultModel resultModel){
+        questionService.saveToLeaderboard(resultModel);
+        return "redirect:/leaderboard";
     }
 }

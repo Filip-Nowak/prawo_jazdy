@@ -23,17 +23,5 @@ public class QuestionController {
         model.addAttribute("imageNumber",1);
         return "test/test";
     }
-    @GetMapping("/images/{number}")
-    public ResponseEntity<byte[]> image(){
-        ClassPathResource resource = new ClassPathResource("files/images/s1.png");
-        byte[] imageBytes;
-        try {
-            imageBytes = Files.readAllBytes(resource.getFile().toPath());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(imageBytes,headers, HttpStatus.OK);
-    }
+
 }

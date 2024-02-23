@@ -12,4 +12,5 @@ public class QuestionModel {
     private String question;
     private int correctAnswer;
     private int userAnswer;
+    private boolean image;
 }

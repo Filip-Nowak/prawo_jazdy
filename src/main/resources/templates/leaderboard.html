@@ -2,19 +2,102 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Leaderboard</title>
+    <style>
+        body {
+            background-image: url(bgground.webp);
+            font-family: Arial, sans-serif;
+        }
+
+        .bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            height: 5%;
+            background-color: #9ECCFa;
+            padding-left: 5%;
+            padding-bottom: 5%;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bolder;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .title {
+            margin-left: 10px;
+        }
+
+        table {
+            margin-top: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+        #container {
+            font-family: Arial, sans-serif;  
+            text-align: center; 
+            margin-top: 200px;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-bottom: 70%;
+            bottom:0;
+            background-color: #f8f3ea;
+            height: 500px;
+        }
+        .toolbar {
+            background-color: #D1e8ff; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+            position: fixed;
+            top: 10%;
+            right: 0;
+            left: 0;
+            height: 5%;
+            
+        }
+    </style>
 </head>
 <body>
-hello from leaderboard
-<p>LEADERBOARD</p>
+<div class="bar">
+    <h1 class="title">Leaderboard</h1>
+</div>
+<div class="toolbar">
+    <form action="#" th:action="@{/leaderboard}" method="get" id="leaderboards-button">
+        <input type="submit" value="">
+    </form>
+    <input type="submit" id="home-button"><!-- Jakbyś mógł tu dodać foty z domkiem i wyjściem-->
+    <input type="submit" id="exit-button">
+</div>
+<div class="container">
 <table>
     <tr>
-        <th>place</th>
-        <th>nickname</th>
-        <th>score</th>
-        <th>time</th>
-        <th>date</th>
-
+        <th>Place</th>
+        <th>Nickname</th>
+        <th>Score</th>
+        <th>Time</th>
+        <th>Date</th>
     </tr>
     <tr th:each="result,i : ${leaderboard.scores}">
         <td th:text="(${i.index}+1)+'.'"></td>
@@ -24,5 +107,7 @@ hello from leaderboard
         <td th:text="${result.date}"></td>
     </tr>
 </table>
+</div>
+</body>
 </body>
 </html>

@@ -67,11 +67,16 @@ public class ExamController {
         ExamResultModel resultModel=ExamResultModel.builder()
                 .questionList(new LinkedList<>())
                 .correctAnswers(0).build();
-        for(Map.Entry<String,String> entry:formModel.getAnswers().entrySet()){
-            int questionNumber=Integer.parseInt(entry.getKey());
-            int answerNumber=Integer.parseInt(entry.getValue());
-            Question question=questionService.findByNumber(questionNumber);
+        if(formModel.getAnswers()==null){
+            resultModel.setCorrectAnswers(0);
+        }else{
+        for(QuestionModel questionModel:formModel.getQuestions()){
             List<AnswerModel> answers=new LinkedList<>();
+            int questionNumber=questionModel.getNumber();
+            Question question=questionService.findByNumber(questionNumber);
+            if((question.getCorrectAnswer() + "").equals(formModel.getAnswers().get(questionNumber + ""))){
+                resultModel.setCorrectAnswers(resultModel.getCorrectAnswers()+1);
+            }
             if(question instanceof BasicQuestion){
                 answers.add(
                         AnswerModel.builder()
@@ -92,18 +97,68 @@ public class ExamController {
                     );
                 }
             }
-            QuestionModel questionModel=QuestionModel.builder()
+            int answerNumber=Integer.parseInt(formModel.getAnswers().get(questionNumber+""));
+            QuestionModel questionModel1=QuestionModel.builder()
                     .number(questionNumber)
                     .question(question.getQuestion())
                     .userAnswer(answerNumber)
                     .correctAnswer(question.getCorrectAnswer())
                     .answers(answers)
                     .image(true).build();
-            if(questionModel.getUserAnswer()==questionModel.getCorrectAnswer()){
+            if(questionModel1.getUserAnswer()==questionModel1.getCorrectAnswer()){
                 resultModel.setCorrectAnswers(resultModel.getCorrectAnswers()+1);
             }
-            resultModel.getQuestionList().add(questionModel);
+            resultModel.getQuestionList().add(questionModel1);
         }
+
+
+        }
+
+
+//
+//        if(formModel.getAnswers()==null){
+//            resultModel.setCorrectAnswers(0);
+//        }else{
+//            System.out.println("xdd: "+formModel.getAnswers().size());
+//            for(Map.Entry<String,String> entry:formModel.getAnswers().entrySet()){
+//                int questionNumber=Integer.parseInt(entry.getKey());
+//                int answerNumber=Integer.parseInt(entry.getValue());
+//                List<AnswerModel> answers=new LinkedList<>();
+//                if(question instanceof BasicQuestion){
+//                    answers.add(
+//                            AnswerModel.builder()
+//                                    .answer("Tak")
+//                                    .number(1).build()
+//                    );
+//                    answers.add(
+//                            AnswerModel.builder()
+//                                    .answer("Nie")
+//                                    .number(0).build()
+//                    );
+//                }else{
+//                    for(Answer answer:((AdvancedQuestion)question).getAnswers()){
+//                        answers.add(
+//                                AnswerModel.builder()
+//                                        .number(answer.getNumber())
+//                                        .answer(answer.getAnswer()).build()
+//                        );
+//                    }
+//                }
+//                QuestionModel questionModel=QuestionModel.builder()
+//                        .number(questionNumber)
+//                        .question(question.getQuestion())
+//                        .userAnswer(answerNumber)
+//                        .correctAnswer(question.getCorrectAnswer())
+//                        .answers(answers)
+//                        .image(true).build();
+//                if(questionModel.getUserAnswer()==questionModel.getCorrectAnswer()){
+//                    resultModel.setCorrectAnswers(resultModel.getCorrectAnswers()+1);
+//                }
+//                resultModel.getQuestionList().add(questionModel);
+//            }
+//
+//        }
+
         model.addAttribute("result",resultModel);
         return "result";
     }

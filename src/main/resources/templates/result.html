@@ -2,16 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Wyniki</title>
     <style>
+        body {
+            background-image: url("bgground.webp");
+            font-family: Arial, sans-serif;
+            margin: 0;
+            
+        }
+
+        .bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5%;
+            background-color: #9ECCFa;
+            padding-left: 5%;
+            padding-bottom: 5%;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bolder;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        table {
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            width: 80%;
+            border: 3px solid #ccc;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
         .correct {
-            background-color: green;
-            border: 3px solid black;
+            background-color: #d0f0c0; 
         }
 
         .incorrect {
-            border: 3px solid black;
-            background-color: red;
+            background-color: #f0c0c0; 
         }
 
         .correctAnswer {
@@ -21,28 +60,89 @@
         .userAnswer {
             text-decoration: underline;
         }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .toolbar {
+            background-color: #D1e8ff; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+            position: fixed;
+            top: 10%;
+            right: 0;
+            left: 0;
+            height: 5%;
+        }
+
+        #container {
+            font-family: Arial, sans-serif;  
+            text-align: center; 
+            margin-top: 200px;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-bottom: 70%;
+            bottom:0;
+            background-color: #f8f3ea;
+            height: 500px;
+        }
+        .bottom-buttons {
+            position: relative;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .bottom-buttons input[type="submit"] {
+            width: 150px; 
+            height: 150px; 
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: box-shadow 0.3s; 
+            box-shadow: 0px 0px 20px rgba(0, 0, 255, 0.5); 
+        }
+
+        .bottom-buttons input[type="submit"]:hover {
+            box-shadow: 0px 0px 20px rgba(0, 0, 255, 0.5); 
+        }
     </style>
 </head>
 <body>
-<h1>Result</h1>
-<p th:text="${result.correctAnswers} + '/32'"></p>
-<div th:each="question : ${result.questionList}">
+<div class="bar">
+    <h1>Wyniki</h1>
+</div>
+<div class="toolbar">
+    <form action="#" th:action="@{/leaderboard}" method="get" id="leaderboards-button">
+        <input type="submit" value="">
+    </form>
+    <input type="submit" id="home-button"><!-- Jakbyś mógł tu dodać foty z domkiem i wyjściem-->
+    <input type="submit" id="exit-button">
+</div>
+
+
+<div id="container">
+    <p th:text="${result.correctAnswers} + '/32'"></p>
+<div th:each="question, index : ${result.questionList}">
     <div th:attr="class=${question.correctAnswer==question.userAnswer ?'correct':'incorrect'}">
-        <p th:text="${question.question}"></p>
-        <p
-                th:each="answer : ${question.answers}" th:text="${answer.answer}"
-                th:attr="class=${question.correctAnswer==answer.number ?'correctAnswer' : (question.userAnswer==answer.number ? 'userAnswer' : '')}">
+        <p th:text="'Pytanie ' + ${index.index + 1 + ': ' + question.question}"></p>
+        <p th:each="answer : ${question.answers}"
+           th:text="${answer.answer}"
+           th:attr="class=${question.correctAnswer==answer.number ?'correctAnswer' : (question.userAnswer==answer.number ? 'userAnswer' : '')}">
         </p>
     </div>
 </div>
 <form action="#" th:action="@{/}" method="get">
-    <input type="submit" value="Return to homepage">
+    <input type="submit" value="Powrót do strony głównej">
 </form>
 <form action="#" th:action="@{/saveToLeaderboard}" method="post" th:object="${result}">
-    <p>share your result</p>
+    <p>Udostępnij swój wynik</p>
     <label><input th:field="*{nickname}"></label>
     <input type="hidden" th:field="*{correctAnswers}" th:value="${result.correctAnswers}"/>
-    <input type="submit" value="View Leaderboard">
+    <input type="submit" value="Zobacz tablicę wyników">
 </form>
+</div>
 </body>
 </html>

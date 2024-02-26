@@ -3,15 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body{
+            background-image: url(bgground.webp);
+        }
+        .bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            height: 5%;
+            background-color: #9ECCFa;
+            padding-left: 5%;
+            padding-bottom: 5%;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
+            font-weight: bolder;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .logo {
+            margin-right: auto;
+        }
+
+        .title {
+            margin-left: 10px;
+        }
+
+        .toolbar {
+            background-color: #D1e8ff; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+            position: fixed;
+            top: 15%;
+            right: 0;
+            left: 0;
+            height: 5%;
+            
+        }
+
+        .toolbar img {
+            margin: 5px 0; 
+            cursor: pointer;
+            width: 30px; 
+            height: 30px; 
+        }
+
+        #container {
+            font-family: Arial, sans-serif;  
+            text-align: center; 
+            margin-top: 200px;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-bottom: 70%;
+            bottom:0;
+            background-color: #f8f3ea;
+            height: 500px;
+        }
+        .how-it-works {
+            text-align: left;
+            margin-left: 5%;
+            font-size: 50px;
+            font-weight: bolder;
+            color: cornflowerblue;
+        }
+
+        .description {
+            text-align: left;
+            margin-left: 5%;
+            float: left;
+
+        }
+
+
+        #start-exam-button {
+            background-image: url("start.png");
+        }
+
+        #leaderboards-button {
+            background-image:url("Grafika1.jpg");
+        }
+        #hover.leaderboards-button{
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); 
+        }
+
+        #home-button {
+            background-image: url("Grafika2.jpg");
+        }
+        #hover.home-button{
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); 
+        }
+
+        #exit-button {
+            background-image: url("Grafika3.jpg");
+        }
+
+        #hover.exit-button{
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); 
+        }
+        #frm{
+            background-image: url();
+        }
+    </style>
 </head>
 <body>
-<p>hello from homepage</p>
-<form action="#" th:action="@{/exam}" method="post">
-    <input type="submit" value="Start exam">
-</form>
-<form action="#" th:action="@{/leaderboard}" method="get">
-    <input type="submit" value="show leaderboards">
-</form>
-
+<div class="bar">
+    <img src="car.aviv" alt="Car" class="logo">
+    <h1 class="title">Test na kierowcę kategorii B</h1>
+</div>
+</br>
+<div class="toolbar">
+    <form action="#" th:action="@{/leaderboard}" method="get" id="leaderboards-button">
+        <input type="submit" value="">
+    </form>
+    <input type="submit" id="home-button"><!-- Jakbyś mógł tu dodać foty z domkiem i wyjściem-->
+    <input type="submit" id="exit-button">
+</div>
+<div id="container"> 
+    <div class="description">
+        <p class="how-it-works">Jak to działa?</p>
+        <p>Egzamin składa się z 32 pytań: 12 specjalistycznych i 20 normalnych.</p>
+        <p>Czas wykonania to 25 minut. Próg zaliczeniowy to 30 punktów na 32.</p>
+        <p>Pytania pochodzą z zakresu kierowania pojazdami, bhp i pierwszej pomocy,</p>
+        <p>a także obsługi pojazdu, znaków drogowych i praw ruchu drogowego.</p>
+        <p>Czy jesteś gotów zweryfikować swoją wiedzę?</p>
+    </div>
+    <div id="frm">
+        <form action="#" th:action="@{/exam}" method="post">
+            <input type="submit" id="start-exam-button" alt="przycisk">
+        </form>
+    </div>
+</div>
 </body>
 </html>

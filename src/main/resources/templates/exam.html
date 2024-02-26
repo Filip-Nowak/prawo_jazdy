@@ -3,27 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="styleexam.css" type="text/css" rel="stylesheet">
     <style>
-        .question{
-            border: solid black 5px;
+        body {
+            background-image: url(bgground.webp);
         }
+        .bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            height: 5%;
+            background-color: #9ECCFa;
+            padding-left: 5%;
+            padding-bottom: 5%;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
+        }
+        .container {
+            margin-top: 250px;
+            margin-left: 25%;
+            margin-right: 25%;
+            background-color: #f8f3ea;
+        }
+        .toolbar {
+            background-color: #D1e8ff; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+            position: fixed;
+            top: 15%;
+            right: 0;
+            left: 0;
+            height: 5%;
+            
+        }
+        .question-number,
+        .question {
+            border: 1px solid #000; 
+            padding: 10px;
+            margin: 10px auto;
+        }
+        .answers {
+            border: 1px solid #000; 
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #submit-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        #submit-btn:hover,
+        .toolbar img:hover {
+            filter: grayscale(100%); 
+        }
+        #titles {
+            text-align: center;
+            font-size: 40px; 
+            font-weight: bold; 
+            font-family: 'Times New Roman', Times, serif; 
+        }
+        #sub{
+            background-image: url("SUBMIT.png");
+        }
+
     </style>
 </head>
 <body>
-hello from exam
-<div id="container">
+<div class="bar">
+    <div id="timer">
+        <p>czas</p>
+    </div>
+    <div id="titles">
+        <p>Egzamin</p>
+    </div>
+</div>
+<div class="toolbar">
+    <img src="grafika1.png" alt="Grafika 1">
+    <img src="grafika2.png" alt="Grafika 2">
+    <img src="grafika3.png" alt="Grafika 3">
+</div>
+<div class="container">
     <form action="#" th:action="@{/processForm}" th:object="${formData}" method="post">
         <div th:each="question,i : ${questionList}">
+            <div class="question-number">
+                <p th:text="'Pytanie ' + (${i.index} + 1)"></p>
+            </div>
             <div class="question">
-                <p th:text="(${i.index}+1)+'. '+${question.question}"></p>
-                <img th:if="${question.image}" th:src="'http://localhost:8080/images/'+${question.number}" th:alt="${question.question}"/>
-                <label th:each="answer : ${question.answers}">
-                    <input type="radio" th:field="${formData.answers['__${question.number}__']}" th:value="${answer.number}"/>
-                    <span th:text="${answer.answer}"></span>
-                </label>
+                <img th:if="${question.image}" th:src="'http://localhost:8080/images/'+${question.number}" th:alt="${question.question}" class="img"/>
+                <p th:text="${question.question}" class="quest"></p>
+                <div class="answers">
+                    <label th:each="answer : ${question.answers}">
+                        <input type="radio" th:field="${formData.answers['__${question.number}__']}" th:value="${answer.number}"/>
+                        <span th:text="${answer.answer}"></span>
+                    </label>
+                </div>
             </div>
         </div>
-        <input type="submit" value="Submit">
+        <input type="submit" id="sub">
     </form>
 </div>
 </body>

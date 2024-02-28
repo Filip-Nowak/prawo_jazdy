@@ -22,8 +22,8 @@
         }
         .container {
             margin-top: 250px;
-            margin-left: 25%;
-            margin-right: 25%;
+            margin-left: 20%;
+            margin-right: 20%;
             background-color: #f8f3ea;
         }
         .toolbar {
@@ -94,6 +94,7 @@
             <div class="question">
                 <img th:if="${question.image}" th:src="'http://localhost:8080/images/'+${question.number}" th:alt="${question.question}" class="img"/>
                 <p th:text="${question.question}" class="quest"></p>
+                <input type="hidden" th:name="${'questions['+i.index+']'}"  th:value="${question.number}"/>
                 <div class="answers">
                     <label th:each="answer : ${question.answers}">
                         <input type="radio" th:field="${formData.answers['__${question.number}__']}" th:value="${answer.number}"/>
@@ -104,6 +105,37 @@
         </div>
         <input type="submit" id="sub">
     </form>
+<!--    <form action="#" th:action="@{/processForm}" th:object="${questionList}" method="post">-->
+<!--        <div th:each="question,i : ${questionList.questionList}">-->
+<!--            <div class="question-number">-->
+<!--                <p th:text="'Pytanie ' + (${i.index} + 1)"></p>-->
+<!--            </div>-->
+<!--            <div class="question">-->
+<!--                <img th:if="${question.image}" th:src="'http://localhost:8080/images/'+${question.number}" th:alt="${question.question}" class="img"/>-->
+<!--                <div class="answers">-->
+<!--                    <label th:each="answer : ${question.answers}">-->
+<!--                        <input type="radio" th:field="${question.userAnswer}" th:value="${answer.number}"/>-->
+<!--                        <span th:text="${answer.answer}"></span>-->
+<!--                    </label>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+
+<!--        <form action="#" th:action="@{/processForm}" th:object="${questionList}" method="post">-->
+<!--            <div th:each="question,i:${questionList.questionList}">-->
+<!--                <p th:text="${question.question}"></p>-->
+<!--                <div>-->
+<!--                    <label th:each="answer : ${question.answers}">-->
+<!--                        <input type="radio" th:field="${questionList.questionList['__${i.index}__'].question}" th:value="${answer.number}"/>-->
+<!--                        <input type="hidden" th:name="${'questionList['+i.index+'].question'}" value="domyslna wartosc"/>-->
+<!--                        <span th:text="${answer.answer}"></span>-->
+<!--                    </label>-->
+<!--            </div>-->
+<!--            </div>-->
+<!--            <input type="submit" id="sub">-->
+<!--        </form>-->
 </div>
 </body>
 </html>

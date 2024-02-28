@@ -23,13 +23,14 @@ import java.util.Map;
 @Controller
 public class ExamController {
     private final QuestionService questionService;
+
     @PostMapping("/exam")
-    public String startExam(Model model){
-        List<Question> questionList=questionService.getTestQuestions();
-        List<QuestionModel> models=new LinkedList<>();
-        for(Question question:questionList){
-            LinkedList<AnswerModel>answers=new LinkedList<>();
-            if(question instanceof BasicQuestion){
+    public String startExam(Model model) {
+        List<Question> questionList = questionService.getTestQuestions();
+        List<QuestionModel> models = new LinkedList<>();
+        for (Question question : questionList) {
+            LinkedList<AnswerModel> answers = new LinkedList<>();
+            if (question instanceof BasicQuestion) {
                 answers.add(
                         AnswerModel.builder()
                                 .answer("Tak")
@@ -40,8 +41,8 @@ public class ExamController {
                                 .answer("Nie")
                                 .number(0).build()
                 );
-            }else{
-                for(Answer answer:((AdvancedQuestion)question).getAnswers()){
+            } else {
+                for (Answer answer : ((AdvancedQuestion) question).getAnswers()) {
                     answers.add(
                             AnswerModel.builder()
                                     .number(answer.getNumber())
@@ -49,7 +50,7 @@ public class ExamController {
                     );
                 }
             }
-            QuestionModel questionModel=QuestionModel.builder()
+            QuestionModel questionModel = QuestionModel.builder()
                     .question(question.getQuestion())
                     .number(question.getNumber())
                     .answers(answers)
@@ -57,59 +58,93 @@ public class ExamController {
             System.out.println(questionModel);
             models.add(questionModel);
         }
-        model.addAttribute("formData",new ExamFormModel());
-        System.out.println("chuj"+models.size()+" "+questionList.size());
-        model.addAttribute("questionList",models);
+        model.addAttribute("formData", new ExamFormModel());
+        System.out.println("chuj" + models.size() + " " + questionList.size());
+        model.addAttribute("questionList", models);
         return "exam";
     }
+
     @PostMapping("/processForm")
-    public String processExam(Model model, @ModelAttribute(name = "formData") ExamFormModel formModel){
-        ExamResultModel resultModel=ExamResultModel.builder()
+    public String processExam(Model model, @ModelAttribute(name = "formData") ExamFormModel formModel) {
+        ExamResultModel resultModel = ExamResultModel.builder()
                 .questionList(new LinkedList<>())
                 .correctAnswers(0).build();
-        if(formModel.getAnswers()==null){
+        System.out.println(formModel.getAnswers());
+        if (formModel.getAnswers() == null) {
             resultModel.setCorrectAnswers(0);
-        }else{
-        for(QuestionModel questionModel:formModel.getQuestions()){
-            List<AnswerModel> answers=new LinkedList<>();
-            int questionNumber=questionModel.getNumber();
-            Question question=questionService.findByNumber(questionNumber);
-            if((question.getCorrectAnswer() + "").equals(formModel.getAnswers().get(questionNumber + ""))){
-                resultModel.setCorrectAnswers(resultModel.getCorrectAnswers()+1);
-            }
-            if(question instanceof BasicQuestion){
-                answers.add(
-                        AnswerModel.builder()
-                                .answer("Tak")
-                                .number(1).build()
-                );
-                answers.add(
-                        AnswerModel.builder()
-                                .answer("Nie")
-                                .number(0).build()
-                );
-            }else{
-                for(Answer answer:((AdvancedQuestion)question).getAnswers()){
+        } else {
+            for (String questionString : formModel.getQuestions()) {
+                List<AnswerModel> answers = new LinkedList<>();
+                int questionNumber = Integer.parseInt(questionString);
+                Question question = questionService.findByNumber(questionNumber);
+                if(formModel.getAnswers().get(questionNumber + "") == null){
+
+                    if (question instanceof BasicQuestion) {
+                        answers.add(
+                                AnswerModel.builder()
+                                        .answer("Tak")
+                                        .number(1).build()
+                        );
+                        answers.add(
+                                AnswerModel.builder()
+                                        .answer("Nie")
+                                        .number(0).build()
+                        );
+                    } else {
+                        for (Answer answer : ((AdvancedQuestion) question).getAnswers()) {
+                            answers.add(
+                                    AnswerModel.builder()
+                                            .number(answer.getNumber())
+                                            .answer(answer.getAnswer()).build()
+                            );
+                        }
+                    }
+
+
+                    QuestionModel questionModel1 = QuestionModel.builder()
+                            .number(questionNumber)
+                            .question(question.getQuestion())
+                            .correctAnswer(question.getCorrectAnswer())
+                            .answers(answers)
+                            .userAnswer(-1)
+                            .image(true).build();
+                    resultModel.getQuestionList().add(questionModel1);
+
+                    continue;
+                }
+                if ((question.getCorrectAnswer() + "").equals(formModel.getAnswers().get(questionNumber + ""))) {
+                    resultModel.setCorrectAnswers(resultModel.getCorrectAnswers() + 1);
+                }
+                if (question instanceof BasicQuestion) {
                     answers.add(
                             AnswerModel.builder()
-                                    .number(answer.getNumber())
-                                    .answer(answer.getAnswer()).build()
+                                    .answer("Tak")
+                                    .number(1).build()
                     );
+                    answers.add(
+                            AnswerModel.builder()
+                                    .answer("Nie")
+                                    .number(0).build()
+                    );
+                } else {
+                    for (Answer answer : ((AdvancedQuestion) question).getAnswers()) {
+                        answers.add(
+                                AnswerModel.builder()
+                                        .number(answer.getNumber())
+                                        .answer(answer.getAnswer()).build()
+                        );
+                    }
                 }
+                int answerNumber = Integer.parseInt(formModel.getAnswers().get(questionNumber + ""));
+                QuestionModel questionModel1 = QuestionModel.builder()
+                        .number(questionNumber)
+                        .question(question.getQuestion())
+                        .userAnswer(answerNumber)
+                        .correctAnswer(question.getCorrectAnswer())
+                        .answers(answers)
+                        .image(true).build();
+                resultModel.getQuestionList().add(questionModel1);
             }
-            int answerNumber=Integer.parseInt(formModel.getAnswers().get(questionNumber+""));
-            QuestionModel questionModel1=QuestionModel.builder()
-                    .number(questionNumber)
-                    .question(question.getQuestion())
-                    .userAnswer(answerNumber)
-                    .correctAnswer(question.getCorrectAnswer())
-                    .answers(answers)
-                    .image(true).build();
-            if(questionModel1.getUserAnswer()==questionModel1.getCorrectAnswer()){
-                resultModel.setCorrectAnswers(resultModel.getCorrectAnswers()+1);
-            }
-            resultModel.getQuestionList().add(questionModel1);
-        }
 
 
         }
@@ -159,11 +194,12 @@ public class ExamController {
 //
 //        }
 
-        model.addAttribute("result",resultModel);
+        model.addAttribute("result", resultModel);
         return "result";
     }
+
     @PostMapping("/saveToLeaderboard")
-    public String saveToLeaderboard(@ModelAttribute(name = "result") ExamResultModel resultModel){
+    public String saveToLeaderboard(@ModelAttribute(name = "result") ExamResultModel resultModel) {
         questionService.saveToLeaderboard(resultModel);
         return "redirect:/leaderboard";
     }

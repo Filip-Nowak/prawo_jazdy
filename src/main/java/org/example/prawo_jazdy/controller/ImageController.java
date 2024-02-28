@@ -33,4 +33,22 @@ public class ImageController {
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(imageBytes,headers, HttpStatus.OK);
     }
+    @GetMapping("/menu-images/{name}")
+    public ResponseEntity<byte[]> menuImage(@PathVariable String name){
+        ClassPathResource resource;
+        resource = new ClassPathResource("files/images/"+name+".png");
+        if(!resource.exists()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        byte[] imageBytes;
+        try {
+            imageBytes = Files.readAllBytes(resource.getFile().toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(imageBytes,headers, HttpStatus.OK);
+    }
+
 }

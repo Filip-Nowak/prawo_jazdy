@@ -6,7 +6,13 @@
 </head>
 <body>
 <div>
-<img th:src="@{images/${imageNumber}}" alt="Xd"/>
+<form action="#" th:action="@{/test2}" method="post" th:object="${questions}">
+    <input th:field="${questions.questionList[0].question}">
+    <input type="hidden" name="questionList[0].question" value="domyslna wartosc"/>
+    <input th:field="${questions.questionList[1].question}">
+    <input type="hidden" th:value="'xd'" th:field="${string}">
+    <input type="submit">
+</form>
 
 </div>
 </body>

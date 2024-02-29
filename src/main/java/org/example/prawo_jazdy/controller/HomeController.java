@@ -25,11 +25,16 @@ public class HomeController {
         List<Leaderboard> leaderboard=questionService.getLeaderboard();
         LeaderboardModel leaderboardModel = new LeaderboardModel(new LinkedList<>());
         for(Leaderboard score:leaderboard){
-
+            int seconds=score.getTime();
+            String time;
+            if(seconds<10)
+                time=seconds/60+":0"+seconds%60;
+            else
+                time=seconds/60+":"+seconds%60;
             leaderboardModel.getScores().add(UserScoreModel.builder()
                     .nickname(score.getNickname())
                     .score(score.getScore())
-                    .time(score.getTime())
+                    .time(time)
                     .date(score.getDate()).build());
         }
         model.addAttribute("leaderboard",leaderboardModel);

@@ -67,15 +67,20 @@ public class QuestionService {
     }
 
     public void saveToLeaderboard(ExamResultModel resultModel) {
+        String []arr=resultModel.getTime().split(":");
+        String minutes=arr[0];
+        String seconds=arr[1];
+        int time=Integer.parseInt(minutes)*60+Integer.parseInt(seconds);
         Leaderboard leaderboard = Leaderboard.builder()
                 .score(resultModel.getCorrectAnswers())
                 .nickname(resultModel.getNickname())
                 .date(LocalDate.now())
+                .time(time)
                 .build();
         leaderboardRepository.save(leaderboard);
     }
 
     public List<Leaderboard> getLeaderboard() {
-        return leaderboardRepository.findAllByOrderByScoreDescTimeDesc();
+        return leaderboardRepository.findAllByOrderByScoreDescTimeAsc();
     }
 }

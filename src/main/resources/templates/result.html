@@ -124,7 +124,9 @@
 
 
 <div id="container">
+    <p th:text="${result.passed?'passed':'not passed'}"></p>
     <p th:text="${result.correctAnswers} + '/32'"></p>
+    <p th:text="${'time: '+result.time}"></p>
 <div th:each="question, index : ${result.questionList}">
     <div th:attr="class=${question.correctAnswer==question.userAnswer ?'correct':'incorrect'}">
         <p th:text="'Pytanie ' + ${index.index + 1 + ': ' + question.question}"></p>
@@ -140,6 +142,7 @@
 <form action="#" th:action="@{/saveToLeaderboard}" method="post" th:object="${result}">
     <p>Udostępnij swój wynik</p>
     <label><input th:field="*{nickname}"></label>
+    <input type="hidden" th:field="*{time}" th:value="${result.time}">
     <input type="hidden" th:field="*{correctAnswers}" th:value="${result.correctAnswers}"/>
     <input type="submit" value="Zobacz tablicę wyników">
 </form>

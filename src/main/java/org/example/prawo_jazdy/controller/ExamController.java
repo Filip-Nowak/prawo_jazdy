@@ -15,6 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +63,10 @@ public class ExamController {
             System.out.println(questionModel);
             models.add(questionModel);
         }
-        model.addAttribute("formData", new ExamFormModel());
+        ExamFormModel formModel=new ExamFormModel();
+
+        formModel.setStartDateTime(LocalDateTime.now().toString());
+        model.addAttribute("formData", formModel);
         System.out.println("chuj" + models.size() + " " + questionList.size());
         model.addAttribute("questionList", models);
         return "exam";
@@ -66,13 +74,69 @@ public class ExamController {
 
     @PostMapping("/processForm")
     public String processExam(Model model, @ModelAttribute(name = "formData") ExamFormModel formModel) {
+        System.out.println(formModel);
+        System.out.println("endTime: "+LocalDateTime.now());
+        LocalDateTime endDateTime=LocalDateTime.now();
         ExamResultModel resultModel = ExamResultModel.builder()
                 .questionList(new LinkedList<>())
                 .correctAnswers(0).build();
         System.out.println(formModel.getAnswers());
-        if (formModel.getAnswers() == null) {
-            resultModel.setCorrectAnswers(0);
-        } else {
+        if(formModel.getAnswers()==null){
+            List<QuestionModel> models=new LinkedList<>();
+            for(String questionString:formModel.getQuestions()){
+                int questionNumber = Integer.parseInt(questionString);
+                Question question=questionService.findByNumber(questionNumber);
+                LinkedList<AnswerModel> answers = new LinkedList<>();
+                if (question instanceof BasicQuestion) {
+                    answers.add(
+                            AnswerModel.builder()
+                                    .answer("Tak")
+                                    .number(1).build()
+                    );
+                    answers.add(
+                            AnswerModel.builder()
+                                    .answer("Nie")
+                                    .number(0).build()
+                    );
+                } else {
+                    for (Answer answer : ((AdvancedQuestion) question).getAnswers()) {
+                        answers.add(
+                                AnswerModel.builder()
+                                        .number(answer.getNumber())
+                                        .answer(answer.getAnswer()).build()
+                        );
+                    }
+                }
+                QuestionModel questionModel=QuestionModel.builder()
+                        .image(true)
+                        .userAnswer(-1)
+                        .number(questionNumber)
+                        .question(question.getQuestion())
+                        .correctAnswer(question.getCorrectAnswer())
+                        .answers(answers)
+                        .build();
+                models.add(questionModel);
+            }
+            ExamResultModel examResultModel=new ExamResultModel();
+            examResultModel.setQuestionList(models);
+            examResultModel.setCorrectAnswers(0);
+            String startDateTimeStr= formModel.getStartDateTime();
+            LocalDateTime startDateTime=LocalDateTime.parse(startDateTimeStr,DateTimeFormatter.ISO_DATE_TIME);
+            long seconds = ChronoUnit.SECONDS.between(startDateTime, endDateTime);
+            String time;
+            if(seconds%60<10) {
+                time= seconds/60+":0"+seconds%60;
+            }
+            else {
+                time= seconds/60+":"+seconds%60;
+            }
+            examResultModel.setTime(time);
+            examResultModel.setPassed(false);
+            model.addAttribute("result",examResultModel);
+            return "result";
+        }
+
+
             for (String questionString : formModel.getQuestions()) {
                 List<AnswerModel> answers = new LinkedList<>();
                 int questionNumber = Integer.parseInt(questionString);
@@ -147,7 +211,7 @@ public class ExamController {
             }
 
 
-        }
+
 
 
 //
@@ -193,7 +257,20 @@ public class ExamController {
 //            }
 //
 //        }
-
+        String startDateTimeStr= formModel.getStartDateTime();
+        //DateTimeFormatter formatter=DateTimeFormatter.ofPattern();
+        LocalDateTime startDateTime=LocalDateTime.parse(startDateTimeStr,DateTimeFormatter.ISO_DATE_TIME);
+        long seconds = ChronoUnit.SECONDS.between(startDateTime, endDateTime);
+        String time;
+        if(seconds%60<10)
+            time= seconds/60+":0"+seconds%60;
+        else
+            time= seconds/60+":"+seconds%60;
+        resultModel.setTime(time);
+        if(resultModel.getCorrectAnswers()>30)
+            resultModel.setPassed(true);
+        else
+            resultModel.setPassed(false);
         model.addAttribute("result", resultModel);
         return "result";
     }

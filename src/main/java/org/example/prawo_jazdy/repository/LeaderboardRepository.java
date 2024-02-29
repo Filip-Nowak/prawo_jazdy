@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface LeaderboardRepository extends JpaRepository<Leaderboard, Integer> {
-    List<Leaderboard> findAllByOrderByScoreDescTimeDesc();
+    List<Leaderboard> findAllByOrderByScoreDescTimeAsc();
 }

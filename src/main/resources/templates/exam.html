@@ -101,8 +101,10 @@
                         <span th:text="${answer.answer}"></span>
                     </label>
                 </div>
+
             </div>
         </div>
+        <input type="hidden" style="display: none" name="startDateTime" th:value="${formData.startDateTime}">
         <input type="submit" id="sub">
     </form>
 <!--    <form action="#" th:action="@{/processForm}" th:object="${questionList}" method="post">-->

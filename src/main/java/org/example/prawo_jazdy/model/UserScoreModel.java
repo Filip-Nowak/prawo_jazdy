@@ -9,6 +9,6 @@ import java.time.LocalDate;
 public class UserScoreModel {
     private String nickname;
     private int score;
-    private int time;
+    private String time;
     private LocalDate date;
 }

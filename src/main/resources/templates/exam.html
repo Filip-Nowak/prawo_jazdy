@@ -4,49 +4,125 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="styleexam.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         body {
-            background-image: url(bgground.webp);
+            height: 100%;
+            width: 100%;
+            /*background-image: url("http://localhost:8080/menu-images/bgground");*/
+            background-size: cover;
+            background-repeat: no-repeat;
         }
+        .img{
+            width:100%;
+            height:100%;
+        }
+
         .bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             margin-left: auto;
-            height: 5%;
+            height: 40px;
             background-color: #9ECCFa;
             padding-left: 5%;
-            padding-bottom: 5%;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
+            padding-bottom: 70px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: #FFFFFF;
+
+
+        }
+
+        /*.logo {
+            margin-right: auto;
+        }*/
+
+        #titles {
+            margin-left: 10px;
+            font-size: 250%;
+            text-align:center;
+            font-size: 40px;
+            font-weight: bold;
+            float:center;
+            right:0;
+            width:85%;
+        }
+
+        .toolbar {
+            background-color: #D1e8ff;
+            padding: 0; /* zmienione padding na 0 */
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: fixed;
+            top: 110px;
+            left: 0;
+            right: 0;
+            height: 40px; /* zmieniona wysokość na 40px */
+            width: 100%;
+            border-top: none;
+            border-bottom: none;
+            position:fixed;
+        }
+
+        .toolbar .btn {
+            background-color: #D1e8ff;
+            border: none;
+            border-left: 1px solid lightgray;
+            border-right: none; /* usunięty border po prawej stronie */
+            border-top: none;
+            border-bottom: none;
+            cursor: pointer;
+            width: auto;
+            height: 100%;
+            margin: 0;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.5s ease;
+        }
+
+        .toolbar .btn:first-child {
+            border-left: none; /* usunięty border z lewej strony dla pierwszego przycisku */
+        }
+
+        .toolbar .btn img {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+        }
+
+        .toolbar .spacer {
+            flex-grow: 1;
+        }
+        .btn:hover {
+            background-color: white;
+            box-shadow: 0px 2px 5px rgba(0, 0, 255, 0.5);
+        }
+        #ex{
+            border-right:  1px solid lightgray;
+        }
+        form{
+            height:100%;
         }
         .container {
-            margin-top: 250px;
-            margin-left: 20%;
-            margin-right: 20%;
+            margin:auto;
+            padding:110px;
+
+            width:60%;
             background-color: #f8f3ea;
-        }
-        .toolbar {
-            background-color: #D1e8ff; 
-            padding: 10px;
-            display: flex;
-            flex-direction: column; 
-            justify-content: flex-start; 
-            position: fixed;
-            top: 15%;
-            right: 0;
-            left: 0;
-            height: 5%;
-            
+
         }
         .question-number,
         .question {
-            border: 1px solid #000; 
+            /*border: 1px solid #000;*/
             padding: 10px;
             margin: 10px auto;
         }
         .answers {
-            border: 1px solid #000; 
+            /*border: 1px solid #000;*/
             padding: 10px;
             margin-bottom: 10px;
         }
@@ -59,31 +135,93 @@
         .toolbar img:hover {
             filter: grayscale(100%); 
         }
-        #titles {
-            text-align: center;
-            font-size: 40px; 
-            font-weight: bold; 
-            font-family: 'Times New Roman', Times, serif; 
+
+
+
+        #timer{
+            float:left;
+            color:white;
         }
-        #sub{
-            background-image: url("SUBMIT.png");
+        #sub {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            float:center;
+            margin-left:30%;
+            margin-right:30%;
         }
 
+        #sub:hover {
+            background-color: #45a049;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        #tsty{
+            float:left;
+            padding:10px;
+            height:100%;
+            width:15%;
+        }
+
+
     </style>
+    <script>
+        function startTimer() {
+            var timerElement = document.getElementById('timer');
+            var timeInSeconds = 25 * 60; // 25 minutes * 60 seconds
+            var timerInterval = setInterval(function() {
+                var minutes = Math.floor(timeInSeconds / 60);
+                var seconds = timeInSeconds % 60;
+                var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+                timerElement.textContent = minutes + ':' + formattedSeconds;
+                timeInSeconds--;
+                if (timeInSeconds < 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = 'Czas minął!';
+
+                }
+            }, 1000);
+        }
+        function exit(){
+            if(window.confirm("Czy zamierzasz opuścić stronę?")){
+                window.close();
+            }
+        }
+    </script>
 </head>
-<body>
+<body onload="startTimer()">
 <div class="bar">
-    <div id="timer">
-        <p>czas</p>
+    <div id="tsty">
+        <span class="material-symbols-outlined">timer</span>
+        <div id="timer">
+            <p>25:00</p>
+        </div>
     </div>
-    <div id="titles">
-        <p>Egzamin</p>
-    </div>
-</div>
+
+        <div id="titles">
+            <p>Egzamin</p>
+        </div></div>
+
 <div class="toolbar">
-    <img src="grafika1.png" alt="Grafika 1">
-    <img src="grafika2.png" alt="Grafika 2">
-    <img src="grafika3.png" alt="Grafika 3">
+    <form action="#" th:action="@{/leaderboard}" method="get" name="leaderboards-button">
+        <input type="submit" onclick="submitForm()" value="Leaderboards" class="btn" id="le">
+    </form>
+    <form action="#" th:action="@{/}" method="get" name="leaderboards-button">
+        <input type="submit" name="home-button" class="btn" value="Homepage" id="ho">
+    </form>
+    <input type="button" name="exit-button" class="btn" value="Exit" id="ex" onclick="exit()">
+    <div class="spacer"></div>
 </div>
 <div class="container">
     <form action="#" th:action="@{/processForm}" th:object="${formData}" method="post">
@@ -99,13 +237,15 @@
                     <label th:each="answer : ${question.answers}">
                         <input type="radio" th:field="${formData.answers['__${question.number}__']}" th:value="${answer.number}"/>
                         <span th:text="${answer.answer}"></span>
+                        </br>
                     </label>
+                    </br>
                 </div>
 
             </div>
         </div>
         <input type="hidden" style="display: none" name="startDateTime" th:value="${formData.startDateTime}">
-        <input type="submit" id="sub">
+        <input type="submit" id="sub" value="PRZEŚLIJ">
     </form>
 <!--    <form action="#" th:action="@{/processForm}" th:object="${questionList}" method="post">-->
 <!--        <div th:each="question,i : ${questionList.questionList}">-->
